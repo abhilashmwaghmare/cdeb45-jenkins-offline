@@ -3,7 +3,7 @@ pipeline {
        stages {
            stage ('stage-1-pull') {
                 steps {
-                   git 'https://github.com/abhilashmwaghmare/cdeb45-jenkins-offline.git'
+                   git branch: 'main', url: 'https://github.com/abhilashmwaghmare/react-project.git'
                     
       }
     }
