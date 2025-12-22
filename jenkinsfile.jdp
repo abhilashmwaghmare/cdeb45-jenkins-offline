@@ -1,14 +1,15 @@
 pipeline {
     agent any 
        stages {
-           stage ('stage-1-pull') {
+           stage ('stage-1-pull') {         
                 steps {
                    git branch: 'devops', url: 'https://github.com/abhilashmwaghmare/EASY_CRUD.git'
       }
     }
-           stage ('stage-2-build') {
+           stage ('stage-2-build') {       
                 steps {
-                    echo 'build successfull'
+                    sh '''cd backend
+                        mvn clean package -DskipTests'''
                     
       }
     }
