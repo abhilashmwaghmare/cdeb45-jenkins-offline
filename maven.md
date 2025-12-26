@@ -60,3 +60,17 @@ mvn package
 
 
     # azure pipeline |  | cloudwatch monitoring |   aws pipeline  | Graphana | promethius | troubleshooting 
+
+    # phases/stages  of maven 
+## sonarqube
+
+quality gate 
+advantages of sonarqube
+
+
+## arch of sonarqube 
+sonarqube server sub types 
+
+ ## web ui 
+ ## compute 
+ ## elastic search 
