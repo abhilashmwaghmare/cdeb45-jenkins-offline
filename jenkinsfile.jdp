@@ -17,7 +17,12 @@ pipeline {
            stage ('stage-3-test') {
                 steps {
                      withSonarQubeEnv(installationName: 'sonarqube',credentialsId: 'sonar-cred') {
-      
+                        sh '''cd backend
+                        mvn sonar:sonar \
+                        -Dsonar.projectKey=studentapp \
+                        -Dsonar.projectName='studentapp' \
+                        -Dsonar.host.url=http://3.110.76.136:9000 \
+                          '''
                  
          }        
       }
@@ -26,9 +31,6 @@ pipeline {
 
       stage ('stage-3-quality-gate') {
                 steps {
-
-                  sh '''cd backend
-                       mvn sonar:sonar '''
                    timeout(10) {
                    waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' 
                    
