@@ -16,10 +16,12 @@ pipeline {
     }
            stage ('stage-3-test') {
                 steps {
-
-                   sh '''cd backend
-                         mvn sonar:sonar -Dsonar.projectKey=studentapp -Dsonar.projectName=\'studentapp\' -Dsonar.host.url=http://3.110.76.136:9000 
-                         withSonarQubeEnv(credentialsId: 'sonar-cred') '''
+                   sh '''cd backend 
+                         mvn sonar:sonar \\
+                        -Dsonar.projectKey=studentapp \\
+                        -Dsonar.projectName=\'studentapp\' \\
+                        -Dsonar.host.url=http://3.110.76.136:9000 \\
+                        -Dsonar.token=sqp_1cfd766701a677002f48013c691e97ea3196ec1d'''
                     
       }
     }
@@ -30,3 +32,8 @@ pipeline {
     }
    }
 }
+
+
+
+
+
