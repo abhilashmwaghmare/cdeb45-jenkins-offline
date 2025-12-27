@@ -26,14 +26,15 @@ pipeline {
 
       stage ('stage-3-quality-gate') {
                 steps {
-                  timeout(10) {
-
-                     waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' {
+                   timeout(10) {
+                   waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' 
+                   
+                   }
       
             }
          }        
-      }
-    }
+      
+    
 
 
 
