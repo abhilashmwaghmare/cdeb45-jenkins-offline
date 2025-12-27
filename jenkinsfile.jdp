@@ -26,6 +26,9 @@ pipeline {
 
       stage ('stage-3-quality-gate') {
                 steps {
+
+                  sh '''cd backend
+                       mvn sonar:sonar '''
                    timeout(10) {
                    waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' 
                    
