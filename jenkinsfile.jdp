@@ -17,11 +17,27 @@ pipeline {
            stage ('stage-3-test') {
                 steps {
                      withSonarQubeEnv(installationName: 'sonarqube',credentialsId: 'sonar-cred') {
-
+      
                  
          }        
       }
     }
+
+
+      stage ('stage-3-quality-gate') {
+                steps {
+                  timeout(10) {
+
+                     waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' {
+      
+            }
+         }        
+      }
+    }
+
+
+
+
           stage ('stage-4-deploy') {
                 steps {
                     echo 'deploy done'          
