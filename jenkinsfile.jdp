@@ -10,24 +10,19 @@ pipeline {
                 steps {
                     sh '''cd backend
                         mvn clean package -DskipTests'''
-                      
-                    
+                                 
       }
     }
            stage ('stage-3-test') {
                 steps {
                      withSonarQubeEnv(installationName: 'sonarqube',credentialsId: 'sonar-cred') {
                         sh '''cd backend
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=studentapp \
-                        -Dsonar.projectName='studentapp' \
-                        -Dsonar.host.url=http://3.110.76.136:9000 \
-                          '''
-                 
+                              mvn sonar:sonar -Dsonar.projectKey=studentapp
+ 
+                           '''          
          }        
       }
     }
-
 
       stage ('stage-3-quality-gate') {
                 steps {
@@ -35,24 +30,25 @@ pipeline {
                    waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' 
                    
                    }
-      
             }
          }        
       
-    
-
-
-
-
           stage ('stage-4-deploy') {
                 steps {
                     echo 'deploy done'          
       }
     }
-   }
+  }
 }
 
 
 
 
+// sqp_e36ae9d48f7fdb91df446a7861fd5ede2847747d
 
+
+// mvn sonar:sonar \
+ // -Dsonar.projectKey=first-project \
+ // -Dsonar.projectName='first-project' \
+ // -Dsonar.host.url=http://35.168.20.147:9000 \
+ // -Dsonar.token=sqp_8a90b4d403e6e995aefa609256d0bc29da0d53f2
