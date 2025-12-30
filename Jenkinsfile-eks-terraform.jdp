@@ -18,29 +18,30 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                sh 'terraform init'
+                sh '''terraform init
+                    terraform plan '''
             }
         }
 
-        stage('Terraform Plan') {
-            steps {
-                sh 'terraform plan'
-            }
-        }
+        //stage('Terraform Plan') {
+        //    steps {
+        //        sh 'terraform plan'
+        //    }
+       // }
 
-      //  stage('Terraform apply') {
-      //      steps {
-      //          input message: "Do you want to deploy EKS?"
-       //         sh 'terraform apply -auto-approve'
+      stage('Terraform apply') {
+          steps {
+               input message: "Do you want to deploy EKS?"
+               sh 'terraform apply -auto-approve'
+           }
+        }
+       
+      //  stage('Terraform destroy') {
+       //     steps {
+        //        input message: "Do you want to destroy EKS?"
+        //        sh 'terraform destroy -auto-approve'
          //   }
         //}
-       
-        stage('Terraform destroy') {
-            steps {
-                input message: "Do you want to destroy EKS?"
-                sh 'terraform destroy -auto-approve'
-            }
-        }
 
     }
 }
