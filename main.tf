@@ -5,7 +5,7 @@ provider "aws" {
 ### IAM Role for EKS Cluster
 
 resource "aws_iam_role" "eks_cluster_role" {
-  name = "eks-cluster-role"
+  name = "eks-cluster-role1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -40,7 +40,7 @@ resource "aws_eks_cluster" "eks" {
 
 
 resource "aws_iam_role" "node_role" {
-  name = "eks-node-role"
+  name = "eks-node-role1"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
