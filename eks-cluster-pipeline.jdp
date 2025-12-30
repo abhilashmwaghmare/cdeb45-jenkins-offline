@@ -1,0 +1,17 @@
+pipeline {
+
+  agent any 
+     
+    stages {
+         stage ('stage-1-source-code-pull') {    // code checkout
+                steps {
+                    git '
+    
+
+
+
+
+
+
+
+}

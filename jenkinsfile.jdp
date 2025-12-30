@@ -1,0 +1,46 @@
+pipeline {
+    agent any 
+       stages {
+           stage ('stage-1-pull') {         
+                steps {
+                   git branch: 'devops', url: 'https://github.com/abhilashmwaghmare/EASY_CRUD.git'
+      }
+    }
+           stage ('stage-2-build') {       
+                steps {
+                    sh '''cd backend
+                        mvn clean package -DskipTests'''
+                                 
+      }
+    }
+           stage ('stage-3-test') {
+                steps {
+                     withSonarQubeEnv(installationName: 'sonarqube',credentialsId: 'sonar-cred') {
+                        sh '''cd backend
+                              mvn sonar:sonar -Dsonar.projectKey=studentapp
+ 
+                           '''          
+         }        
+      }
+    }
+
+      //stage ('stage-3-quality-gate') {
+        //        steps {
+         ///          timeout(10) {
+           //        waitForQualityGate abortPipeline: true, credentialsId: 'sonar-cred' 
+                   
+             //      }
+            //}
+        // }        
+      
+          stage ('stage-4-s3-upload') {     // delivery
+                steps {
+                    sh 'aws s3 cp backend/target/student-registration-backend-0.0.1-SNAPSHOT.jar s3://cdec-b45-bucket-war/student-registration-backend-0.0.1-SNAPSHOT.jar'          
+      }
+    }
+  }
+}
+
+
+
+

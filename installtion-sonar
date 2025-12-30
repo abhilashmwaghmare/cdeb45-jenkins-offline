@@ -1,0 +1,85 @@
+Sonarqube Installation
+
+Install and configure Database
+
+apt update -y 
+apt install openjdk-17-jdk -y
+apt install postgresql -y
+systemctl start postgresql
+sudo -u postgres psql
+>> CREATE USER linux PASSWORD 'redhat';
+>> CREATE DATABASE sonarqube;
+>> GRANT ALL PRIVILEGES ON DATABASE sonarqube TO linux;
+>> \c sonarqube;
+>> GRANT ALL PRIVILEGES ON SCHEMA public TO linux;
+>> \q
+
+
+Configure Linux Machine
+
+
+sysctl -w vm.max_map_count=524288
+sysctl -w fs.file-max=131072
+ulimit -n 131072
+ulimit -u 8192
+
+
+Install and Configure Sonarqube
+
+
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-25.5.0.107428.zip
+apt install unzip -y
+unzip sonarqube-25.5.0.107428.zip
+mv sonarqube-25.5.0.107428 /opt/sonar
+cd /opt/sonar
+vim conf/sonar.properties
+>> sonar.jdbc.username=linux
+>> sonar.jdbc.password=redhat
+>> sonar.jdbc.url=jdbc:postgresql://localhost/sonarqube
+
+useradd sonar -m
+chown sonar:sonar -R /opt/sonar
+su sonar
+cd /opt/sonar/bin/linux-x86-64
+./sonar.sh start
+./sonar.sh status 
+
+
+
+
+
+
+
+### Create Infrastructure Pipeline with Pull, Test (tf plan), Deploy (tf apply) stage 
+### Create above pipeline to deploy EKS cluster
+
+## steps to configure 
+
+## Install terraform in jenkins server
+sudo apt update \
+&& sudo apt install -y gnupg software-properties-common curl \
+&& curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+&& echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+| sudo tee /etc/apt/sources.list.d/hashicorp.list \
+&& sudo apt update \
+&& sudo apt install -y terraform \
+&& terraform version
+
+
+## Install kubectl in jenkins server
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+&& chmod +x kubectl \
+&& sudo mv kubectl /usr/local/bin/ \
+&& kubectl version --clie
+
+## configure aws cli in jenkins server with access key and secret key
+curl -O "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
+ "awscliv2.zip" \
+&& sudo apt install -y unzip \
+&& unzip awscliv2.zip \
+&& sudo ./aws/install \
+&& aws --version
+
+
+
+
