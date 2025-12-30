@@ -2,7 +2,7 @@ Sonarqube Installation
 
 Install and configure Database
 
-
+apt update -y 
 apt install openjdk-17-jdk -y
 apt install postgresql -y
 systemctl start postgresql
@@ -44,11 +44,50 @@ cd /opt/sonar/bin/linux-x86-64
 ./sonar.sh start
 ./sonar.sh status 
 
-# sqp_1cfd766701a677002f48013c691e97ea3196ec1d -- sonar token
 
-# 
+
+
+# sqp_cecf9cf510e31b058ecb4e39615f5a4c62267516   --sonar token
+
    mvn sonar:sonar \
   -Dsonar.projectKey=studentapp \
   -Dsonar.projectName='studentapp' \
-  -Dsonar.host.url=http://3.110.76.136:9000 \
-  -Dsonar.token=sqp_1cfd766701a677002f48013c691e97ea3196ec1d
+  -Dsonar.host.url=http://35.154.5.187:9000 \
+  -Dsonar.token=sqp_cecf9cf510e31b058ecb4e39615f5a4c62267516
+
+#
+
+
+### Create Infrastructure Pipeline with Pull, Test (tf plan), Deploy (tf apply) stage 
+### Create above pipeline to deploy EKS cluster
+
+## steps to configure 
+
+## Install terraform in jenkins server
+sudo apt update \
+&& sudo apt install -y gnupg software-properties-common curl \
+&& curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg \
+&& echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" \
+| sudo tee /etc/apt/sources.list.d/hashicorp.list \
+&& sudo apt update \
+&& sudo apt install -y terraform \
+&& terraform version
+
+
+## Install kubectl in jenkins server
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" \
+&& chmod +x kubectl \
+&& sudo mv kubectl /usr/local/bin/ \
+&& kubectl version --client
+
+## configure aws cli in jenkins server with access key and secret key
+curl -O "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" \
+ "awscliv2.zip" \
+&& sudo apt install -y unzip \
+&& unzip awscliv2.zip \
+&& sudo ./aws/install \
+&& aws --version
+
+
+
+

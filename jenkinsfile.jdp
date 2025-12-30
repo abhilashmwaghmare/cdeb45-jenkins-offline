@@ -33,9 +33,9 @@ pipeline {
             }
          }        
       
-          stage ('stage-4-deploy') {
+          stage ('stage-4-s3-upload') {     // delivery
                 steps {
-                    echo 'deploy done'          
+                    sh 'aws s3 cp backend/target/student-registration-backend-0.0.1-SNAPSHOT.jar s3://cdec-b45-bucket-war/student-registration-backend-0.0.1-SNAPSHOT.jar'          
       }
     }
   }
