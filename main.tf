@@ -40,7 +40,7 @@ resource "aws_eks_cluster" "eks" {
 
 
 resource "aws_iam_role" "node_role" {
-  name = "eks-node-role2"
+  name = "eks-node-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
