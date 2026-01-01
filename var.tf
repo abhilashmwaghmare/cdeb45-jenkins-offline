@@ -14,4 +14,10 @@ variable "desired_nodes" {
   default = 2
 }
 
+variable "key_pair_name" {
+  description = "EC2 Key Pair name for SSH access to nodes (optional)"
+  type        = string
+  default     = ""
+}
+
 
