@@ -322,7 +322,7 @@ pipeline {
         stage('Pull') {
             steps {
                 git branch: 'main', 
-                    url: 'https://github.com/shubhamkalsait/studentapp-ui.git'
+                    url: 'https://github.com/<username>/studentapp-ui.git'
             }
         }
         
