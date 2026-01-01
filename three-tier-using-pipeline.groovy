@@ -41,3 +41,7 @@ pipeline {
     }
 
 } 
+
+
+// Note: Docker Hub credentials should be stored in Jenkins credential store
+// Use withCredentials block to securely access Docker Hub tokens
