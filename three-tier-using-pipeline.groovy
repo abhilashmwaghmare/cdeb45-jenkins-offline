@@ -29,6 +29,16 @@ pipeline {
                                docker push abhilash0104/easy-frontend:latest '''
             }  
         }
+        
+        stage('Configure Kubeconfig') {
+           steps {
+              sh '''
+                aws eks update-kubeconfig --region ap-south-1 --name demo-eks-cluster1
+                kubectl get nodes
+                '''
+    }
+}
+
 
 
       stage ('stage-5-deployment') {         
@@ -41,7 +51,3 @@ pipeline {
     }
 
 } 
-
-
-// Note: Docker Hub credentials should be stored in Jenkins credential store
-// Use withCredentials block to securely access Docker Hub tokens
