@@ -7,7 +7,7 @@ variable "cluster_name" {
 }
 
 variable "node_instance_type" {
-  default = "t2.medium"
+  default = "c7i.flex-large"
 }
 
 variable "desired_nodes" {
